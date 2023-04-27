@@ -1,0 +1,7 @@
+'use strict'
+const {app , port} = require("../src/index");
+
+// Listening
+app.listen(port, ()=> {
+    console.info("Listen in port " + port)
+})
