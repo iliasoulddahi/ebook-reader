@@ -1,7 +1,6 @@
-const EBookController = require("../controllers/ebook.controllers");
-
 const router = require("express").Router();
+const v1Router = require("./v1"); 
 
-router.get("/", EBookController.getEBooks)
+router.use("/api/v1", v1Router)
 
 module.exports = router

@@ -1,0 +1,31 @@
+{
+    "Users":[
+        {
+            "username":"Jhon Doe",
+            "email":"jhondoe@mail.com",
+            "password":"secret"
+        },
+        {
+            "username":"Jane Doe",
+            "email":"janedoe@mail.com",
+            "password":"secret"
+        }
+    ],
+    "Ebooks":[
+        {
+            "name":"Test Pdf",
+            "url":"https://documentservices.adobe.com/view-sdk-demo/PDFs/Bodea Brochure.pdf",
+            "OwnerId":1
+        },
+        {
+            "name":"string",
+            "url":"https://documentservices.adobe.com/view-sdk-demo/PDFs/Bodea Brochure.pdf",
+            "OwnerId":1
+        },
+        {
+            "name":"string",
+            "url":"https://documentservices.adobe.com/view-sdk-demo/PDFs/Bodea Brochure.pdf",
+            "OwnerId":2
+        }
+    ]
+}
