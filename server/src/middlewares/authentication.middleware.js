@@ -3,7 +3,7 @@ const {User} = require('../models')
 module.exports = async function authentication(req, res, next){
     try {
         const {token} = req.headers
-        
+        console.log(req.params)
         if(!token){
             throw {
                 name:"Unauthenticated"
