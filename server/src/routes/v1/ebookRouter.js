@@ -2,6 +2,7 @@ const EBookController = require("../../controllers/ebook.controller");
 const authenticationMiddleware = require("../../middlewares/authentication.middleware");
 const authorizationMiddleware = require("../../middlewares/authorization.middleware");
 const router = require('express').Router()
+router.post('save-annotation',EBookController.saveAnnotation)
 router.use(authenticationMiddleware)
 router.get('/ebooks', EBookController.getEBooks)
 router.get('/ebooks/:eBookId', authorizationMiddleware, EBookController.getOneEBooks)

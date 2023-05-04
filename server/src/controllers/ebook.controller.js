@@ -68,6 +68,13 @@ const EBookController = {
         } catch (error) {
             next(error)
         }
+    },
+    saveAnnotation:async (req,res,next)=> {
+        try {
+            console.log(req.body.annotation)
+        } catch (error) {
+            next(error)
+        }
     }
 }
 module.exports = EBookController;

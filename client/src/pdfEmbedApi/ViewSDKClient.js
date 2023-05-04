@@ -25,7 +25,7 @@ class ViewSDKClient {
     previewFile(divId, viewerConfig) {
         const config = {
             /* Pass your registered client id */
-            clientId: "8c0cd670273d451cbc9b351b11d22318",
+            clientId: "936cf9f3f976452b9e7dfa637742adfd",
         };
         if (divId) { /* Optional only for Light Box embed mode */
             /* Pass the div id in which PDF should be rendered */
@@ -68,7 +68,7 @@ class ViewSDKClient {
         /* Initialize the AdobeDC View object */
         this.adobeDCView = new window.AdobeDC.View({
             /* Pass your registered client id */
-            clientId: "c8a286e0eb5d4401bee14f9f368ff27a",
+            clientId: "e74a1c00ac92475b910fd478a38f3960",
             /* Pass the div id in which PDF should be rendered */
             divId,
         });
@@ -113,14 +113,36 @@ class ViewSDKClient {
         );
     }
 
-    registerEventsHandler() {
+    registerEventsHandler(userId) {
         /* Register the callback to receive the events */
         this.adobeDCView.registerCallback(
             /* Type of call back */
             window.AdobeDC.View.Enum.CallbackType.EVENT_LISTENER,
             /* call back function */
             event => {
-                console.log(event);
+                /* Check if the event type is ANNOTATION_ADDED or ANNOTATION_UPDATED */
+                if (event.type === "ANNOTATION_ADDED" || event.type === "ANNOTATION_UPDATED") {
+                    /* Extract the annotation data from the event */
+                    const { annotation } = event.data;
+                    console.log(annotation)
+                    /* Save the annotation data to your backend server, along with the user ID */
+                    fetch('http://localhost:4000/api/v1/save-annotation', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            userId: userId,
+                            annotation: annotation
+                        })
+                    })
+                    .then(response => {
+                        console.log('Annotation saved:', response);
+                    })
+                    .catch(error => {
+                        console.error('Error saving annotation:', error);
+                    });
+                }
             },
             /* options to control the callback execution */
             {
@@ -129,6 +151,7 @@ class ViewSDKClient {
             }
         );
     }
+    
 }
 
 export default ViewSDKClient;

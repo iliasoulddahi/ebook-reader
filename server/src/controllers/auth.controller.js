@@ -48,7 +48,7 @@ const AuthController = {
       
             const access_token = sign({ id, role, username, email })
       
-            res.json({ access_token, username, role })
+            res.json({ id,access_token, username, role })
           } catch (error) {
             next(error)
           }

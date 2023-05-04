@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="adobe-dc-view"></div>
+    <script src="https://documentservices.adobe.com/view-sdk/viewer.js"></script>
+    <script type="text/javascript">
+        var userId = "12345"; // Replace with the user ID
+        var adobeDCView = null;
+
+        document.addEventListener("adobe_dc_view_sdk.ready", function(){ 
+            adobeDCView = new AdobeDC.View({clientId: "e74a1c00ac92475b910fd478a38f3960", divId: "adobe-dc-view"});
+            adobeDCView.previewFile({
+                content:{location: {url: "https://documentservices.adobe.com/view-sdk-demo/PDFs/Bodea Brochure.pdf"}},
+                metaData:{fileName: "Bodea Brochure.pdf"}
+            }, {});
+
+            adobeDCView.registerCallback(
+                AdobeDC.View.Enum.CallbackType.EVENT_LISTENER,
+                function(event) {
+                    if (event.type === "ANNOTATION_CREATED" || event.type === "ANNOTATION_UPDATED" || event.type === "ANNOTATION_DELETED") {
+                        adobeDCView.getAnnotations({annotationIds: [event.annotationId]}, function(annotations) {
+                            if (annotations && annotations.length > 0) {
+                                // Save the annotations made by the user with the specified user ID
+                                saveAnnotations(userId, annotations);
+                            }
+                        });
+                    }
+                },
+                {enablePDFAnalytics: true}
+            );
+        });
+
+        function saveAnnotations(userId, annotations) {
+            fetch('http://localhost:4000/api/v1/save-annotation', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        userId: userId,
+                        annotation: annotation
+                    })
+                })
+            // Send the annotations data to the server for saving
+            // Replace this with your actual implementation to send the data to the server
+            console.log("Saving annotations for user " + userId + ": ", annotations);
+        }
+    </script>
+    <script>
+        // Auto save annotations when they are created, updated, or deleted
+        setInterval(function() {
+            adobeDCView.getAnnotations({userId: userId}, function(annotations) {
+                if (true) {
+                    saveAnnotations(userId, annotations);
+                }
+            });
+        }, 5000); // set the interval time in milliseconds (5000 = 5 seconds)
+    </script>
+</body>
+</html>
