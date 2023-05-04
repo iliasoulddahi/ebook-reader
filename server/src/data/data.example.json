@@ -3,12 +3,14 @@
         {
             "username":"Jhon Doe",
             "email":"jhondoe@mail.com",
-            "password":"secret"
+            "password":"secret",
+            "role":"admin"
         },
         {
             "username":"Jane Doe",
             "email":"janedoe@mail.com",
-            "password":"secret"
+            "password":"secret",
+            "role":"user"
         }
     ],
     "Ebooks":[

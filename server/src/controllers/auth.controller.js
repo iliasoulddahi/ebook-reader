@@ -36,8 +36,7 @@ const AuthController = {
             })
       
             const err = {
-              name: 'AuthenticationFailed',
-              message: 'Email or Password is invalid',
+              name: 'InvalidCredentials'
             }
       
             if (!user) throw err
@@ -49,7 +48,7 @@ const AuthController = {
       
             const access_token = sign({ id, role, username, email })
       
-            res.json({ access_token })
+            res.json({ access_token, username, role })
           } catch (error) {
             next(error)
           }
