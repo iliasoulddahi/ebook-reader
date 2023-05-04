@@ -25,7 +25,7 @@ export const fetchOneEbookSuccess = (payload)=> ({
 })
 
 /* =========================THUNK====================== */
-const apiUrl = "http://localhost:4000/api/v1/"
+const apiUrl = "https://a94f-223-255-230-63.ngrok-free.app/api/v1/"
 
 export const login = (credentials) => {
   return async (dispatch, getState) => {
